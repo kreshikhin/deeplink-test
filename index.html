@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width" />
+        <title>Deeplink Test</title>
+
+    </head>
+    <body>
+        <h1>Deeplink Test</h1>
+        <p>My first paragraph.</p>
+        <script>
+            // Initialize the agent at application startup.
+            // If you're using an ad blocker or Brave/Firefox, this import will not work.
+            // Please use the NPM package instead: https://t.ly/ORyXk
+            const fpPromise = import('https://openfpcdn.io/fingerprintjs/v4')
+              .then(FingerprintJS => FingerprintJS.load())
+          
+            // Get the visitor identifier when you need it.
+            fpPromise
+              .then(fp => fp.get())
+              .then(result => {
+                // This is the visitor identifier:
+                const visitorId = result.visitorId
+                console.log(visitorId)
+              })
+          </script>
+    </body>
+</html>
