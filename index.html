@@ -43,7 +43,9 @@
                     if (getNextURL() === undefined) {
                         alert('undefined url')
                     } else if (getMobileOperatingSystem() == 'iOS') {
-                        goto(getNextURL(), IOS_CUSTOM_SCHEME_URL);
+                        goto(IOS_CUSTOM_SCHEME_URL, getNextURL());
+                    } else {
+                        document.location = getNextURL()
                     }
                 };
 
@@ -106,7 +108,6 @@
                 script.setAttribute('src', url); 
 
                 document.getElementsByTagName('head')[0].appendChild(script);
-
             }
         </script>
     </body>
