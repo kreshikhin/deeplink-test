@@ -14,6 +14,7 @@
         <p>next url</p>
         <p id="next-url">url</p>
         <button id="button">NEXT >></button>
+        <p id="status" style="color: rgb(107, 7, 7);"></p>
         <script>
             GOOGLE_PLAY_URL = 'https://play.google.com/store/apps/details?id=ru.berizaryad';
             APPSTORE_URL = "itms-apps://itunes.apple.com/app/apple-store/id1458730835";
@@ -89,7 +90,8 @@
                 script.onload = function() { 
                     document.location = url;
                 } 
-                script.onerror = function() { 
+                script.onerror = function(e) { 
+                    document.getElementsByTagName('status').textContent = '' + e;
                     document.location = fallback;
                 } 
                 script.setAttribute('src', url); 
