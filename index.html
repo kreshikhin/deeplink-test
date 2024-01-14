@@ -52,7 +52,7 @@
                 document.getElementById('device').textContent = getMobileOperatingSystem()
                 document.getElementById('next-url').textContent = getNextURL()
 
-                if(getNextURL() == 'iOS') {
+                if(getMobileOperatingSystem() == 'iOS') {
                     var xmlhttp = new XMLHttpRequest();
                     xmlhttp.open('GET', 'berizaryad:/', false);
                     try {
