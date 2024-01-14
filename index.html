@@ -19,6 +19,7 @@
         <script>
             GOOGLE_PLAY_URL = 'https://play.google.com/store/apps/details?id=ru.berizaryad';
             APPSTORE_URL = "itms-apps://itunes.apple.com/app/apple-store/id1458730835";
+            IOS_CUSTOM_SCHEME_URL ="berizaryad:/"
 
             window.addEventListener('DOMContentLoaded', function() {
                 console.log('onload');
@@ -41,8 +42,8 @@
                 document.getElementById('button').onclick = function(event) {
                     if (getNextURL() === undefined) {
                         alert('undefined url')
-                    } else {
-                        document.location = getNextURL()
+                    } else if (getMobileOperatingSystem() == 'iOS') {
+                        goto(getNextURL(), IOS_CUSTOM_SCHEME_URL);
                     }
                 };
 
