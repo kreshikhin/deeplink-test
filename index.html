@@ -4,26 +4,75 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width" />
         <title>Deeplink Test</title>
-
     </head>
     <body>
         <h1>Deeplink Test</h1>
-        <p>My first paragraph.</p>
+        <p>fingerprint (visitor id):</p>
+        <p id="visitor-id"></p>
+        <p>status</p>
+        <p id="status">unknown</p>
+        <p>device</p>
+        <p id="device"></p>
+        <p>next url</p>
+        <p id="next-url">url</p>
+        <button id="button">NEXT >></button>
         <script>
-            // Initialize the agent at application startup.
-            // If you're using an ad blocker or Brave/Firefox, this import will not work.
-            // Please use the NPM package instead: https://t.ly/ORyXk
-            const fpPromise = import('https://openfpcdn.io/fingerprintjs/v4')
-              .then(FingerprintJS => FingerprintJS.load())
-          
-            // Get the visitor identifier when you need it.
-            fpPromise
-              .then(fp => fp.get())
-              .then(result => {
-                // This is the visitor identifier:
-                const visitorId = result.visitorId
-                console.log(visitorId)
-              })
-          </script>
+            GOOGLE_PLAY_URL = 'https://play.google.com/store/apps/details?id=ru.berizaryad';
+            APPSTORE_URL = "itms-apps://itunes.apple.com/app/apple-store/id1458730835";
+
+            window.addEventListener('DOMContentLoaded', function() {
+                console.log('onload');
+                // Initialize the agent at application startup.
+                // If you're using an ad blocker or Brave/Firefox, this import will not work.
+                // Please use the NPM package instead: https://t.ly/ORyXk
+                const fpPromise = import('https://openfpcdn.io/fingerprintjs/v4')
+                .then(FingerprintJS => FingerprintJS.load());
+
+                // Get the visitor identifier when you need it.
+                fpPromise
+                .then(fp => fp.get())
+                .then(result => {
+                    // This is the visitor identifier:
+                    const visitorId = result.visitorId
+                    console.log(visitorId)
+                    document.getElementById('visitor-id').textContent = visitorId;
+                });
+
+                document.getElementById('button').onclick = function(event) {
+                    cdocument.location = getNextURL()
+                };
+
+                document.getElementById('device').textContent = getMobileOperatingSystem()
+                document.getElementById('next-url').textContent = getNextURL()
+            })
+
+            function getNextURL() {
+                let os = getMobileOperatingSystem()
+                switch(os) {
+                case "Android": return GOOGLE_PLAY_URL;
+                case "iOS": return APPSTORE_URL;
+                }
+            }
+
+            function getMobileOperatingSystem() {
+                var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+                // Windows Phone must come first because its UA also contains "Android"
+                if (/windows phone/i.test(userAgent)) {
+                    return "Windows Phone";
+                }
+
+                if (/android/i.test(userAgent)) {
+                    return "Android";
+                }
+
+                // iOS detection from: http://stackoverflow.com/a/9039885/177710
+                if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+                    return "iOS";
+                }
+
+                return "unknown";
+            }
+        </script>
     </body>
 </html>
