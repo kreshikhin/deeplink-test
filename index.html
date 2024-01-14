@@ -9,8 +9,6 @@
         <h1>Deeplink Test</h1>
         <p>fingerprint (visitor id):</p>
         <p id="visitor-id"></p>
-        <p>status</p>
-        <p id="status">unknown</p>
         <p>device</p>
         <p id="device"></p>
         <p>next url</p>
@@ -51,17 +49,6 @@
 
                 document.getElementById('device').textContent = getMobileOperatingSystem()
                 document.getElementById('next-url').textContent = getNextURL()
-
-                if(getMobileOperatingSystem() == 'iOS') {
-                    var xmlhttp = new XMLHttpRequest();
-                    xmlhttp.open('GET', 'berizaryad:/', false);
-                    try {
-                        xmlhttp.send(null);                  // Send the request now
-                        document.getElementById('status').textContent = 'installed'
-                    } catch (e) {
-                        document.getElementById('status').textContent = 'not installed'
-                    }
-                }
             })
 
             function getNextURL() {
