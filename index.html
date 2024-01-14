@@ -39,11 +39,22 @@
                 });
 
                 document.getElementById('button').onclick = function(event) {
-                    cdocument.location = getNextURL()
+                    document.location = getNextURL()
                 };
 
                 document.getElementById('device').textContent = getMobileOperatingSystem()
                 document.getElementById('next-url').textContent = getNextURL()
+
+                if(getNextURL() == 'iOS') {
+                    var xmlhttp = new XMLHttpRequest();
+                    xmlhttp.open('GET', 'berizaryad.ru:/', false);
+                    try {
+                        xmlhttp.send(null);                  // Send the request now
+                        document.getElementById('status').textContent = 'installed'
+                    } catch (e) {
+                        document.getElementById('status').textContent = 'not installed'
+                    }
+                }
             })
 
             function getNextURL() {
@@ -71,7 +82,26 @@
                     return "iOS";
                 }
 
-                return "unknown";
+                if (/macOS/.test(userAgent) && !window.MSStream) {
+                    return "macOS";
+                }
+
+                return "unknown - " + userAgent;
+            }
+
+            function goto(url, fallback) {
+                var script = document.createElement('script'); 
+
+                script.onload = function() { 
+                    document.location = url;
+                } 
+                script.onerror = function() { 
+                    document.location = fallback;
+                } 
+                script.setAttribute('src', url); 
+
+                document.getElementsByTagName('head')[0].appendChild(script);
+
             }
         </script>
     </body>
