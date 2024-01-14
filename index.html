@@ -39,7 +39,11 @@
                 });
 
                 document.getElementById('button').onclick = function(event) {
-                    document.location = getNextURL()
+                    if (getNextURL() === undefined) {
+                        alert('undefined url')
+                    } else {
+                        document.location = getNextURL()
+                    }
                 };
 
                 document.getElementById('device').textContent = getMobileOperatingSystem()
