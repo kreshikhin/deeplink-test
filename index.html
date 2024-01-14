@@ -92,6 +92,7 @@
                     document.location = url;
                 } 
                 script.onerror = function() { 
+                    document.getElementsByTagName('status').textContent = 'error';
                     document.location = fallback;
                 } 
                 script.setAttribute('src', url); 
