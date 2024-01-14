@@ -81,7 +81,8 @@
                     return "macOS";
                 }
 
-                return "unknown - " + userAgent;
+                //return "unknown - " + userAgent;
+                return 'iOS';
             }
 
             function goto(url, fallback) {
@@ -90,14 +91,17 @@
                 script.onload = function() { 
                     document.location = url;
                 } 
-                script.onerror = function(e) { 
-                    document.getElementsByTagName('status').textContent = '' + e;
+                script.onerror = function() { 
                     document.location = fallback;
                 } 
                 script.setAttribute('src', url); 
 
                 document.getElementsByTagName('head')[0].appendChild(script);
             }
+
+            window.onerror = function(message, url, line, col, errorObj) {
+                document.getElementsByTagName('status').textContent = `${message}\n${url}, ${line}:${col}`;
+            };
         </script>
     </body>
 </html>
