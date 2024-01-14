@@ -92,16 +92,16 @@
                     document.location = url;
                 } 
                 script.onerror = function() { 
-                    document.getElementsByTagName('status').textContent = 'error';
+                    document.getElementById('status').textContent = 'error';
                     document.location = fallback;
                 } 
                 script.setAttribute('src', url); 
 
-                document.getElementsByTagName('head')[0].appendChild(script);
+                document.getElementById('head')[0].appendChild(script);
             }
 
             window.onerror = function(message, url, line, col, errorObj) {
-                document.getElementsByTagName('status').textContent = `${message}\n${url}, ${line}:${col}`;
+                document.getElementById('status').textContent = `${message}\n${url}, ${line}:${col}`;
             };
         </script>
     </body>
