@@ -99,6 +99,15 @@
                         clearTimeout(timeoutId);
                     }
                 });
+
+                document.addEventListener("blur", function() {
+                    if (document.visibilityState === 'visible') {
+                        console.log('has focus');
+                    } else {
+                        console.log('lost focus');
+                        clearTimeout(timeoutId);
+                    }
+                });
             }
 
             window.onerror = function(message, url, line, col, errorObj) {
