@@ -91,7 +91,7 @@
                 }, 300);
                 document.location = url;
 
-                document.addEventListener("blur", function() {
+                window.addEventListener("blur", function() {
                     console.log('lost focus');
                     clearTimeout(timeoutId);
                 });
