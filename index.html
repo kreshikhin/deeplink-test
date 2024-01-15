@@ -86,23 +86,22 @@
             }
 
             function goto(url, fallback) {
-                setTimeout(function appNotInstalled() {
-                    document.location = fallback;
-                }, 300);
-                document.location = url;
-
-                // var script = document.createElement('script'); 
-                // script.setAttribute('crossorigin', 'anonymous');
-                // script.onload = function() { 
-                //     document.location = url;
-                // } 
-                // script.onerror = function() { 
-                //     document.getElementById('status').textContent = 'error';
+                // setTimeout(function appNotInstalled() {
                 //     document.location = fallback;
-                // } 
-                // script.setAttribute('src', url); 
+                // }, 300);
+                // document.location = url;
 
-                // document.getElementsByTagName('head')[0].appendChild(script);
+                var script = document.createElement('script'); 
+                script.onload = function() { 
+                    document.location = url;
+                } 
+                script.onerror = function() { 
+                    document.getElementById('status').textContent = 'error';
+                    document.location = fallback;
+                } 
+                script.setAttribute('src', url); 
+
+                document.getElementsByTagName('head')[0].appendChild(script);
             }
 
             window.onerror = function(message, url, line, col, errorObj) {
