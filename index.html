@@ -89,7 +89,13 @@
                 let timeoutId = setTimeout(function appNotInstalled() {
                     document.location = fallback;
                 }, 300);
-                document.location = url;
+
+                try {
+                    document.location = url;
+                } catch {
+                    document.location = fallback;
+                }
+                
 
                 window.addEventListener("blur", function() {
                     console.log('lost focus');
