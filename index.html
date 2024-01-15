@@ -15,7 +15,7 @@
         <p id="next-url">url</p>
         <button id="button">NEXT >></button>
         <p id="status" style="color: rgb(107, 7, 7);"></p>
-        <script>
+        <script id="script">
             GOOGLE_PLAY_URL = 'https://play.google.com/store/apps/details?id=ru.berizaryad';
             APPSTORE_URL = "itms-apps://itunes.apple.com/app/apple-store/id1458730835";
             IOS_CUSTOM_SCHEME_URL ="berizaryad:/"
@@ -86,22 +86,19 @@
             }
 
             function goto(url, fallback) {
-                // setTimeout(function appNotInstalled() {
-                //     document.location = fallback;
-                // }, 300);
-                // document.location = url;
-
-                var script = document.createElement('script'); 
-                script.onload = function() { 
-                    document.location = url;
-                } 
-                script.onerror = function() { 
-                    document.getElementById('status').textContent = 'error';
+                let timeoutId = setTimeout(function appNotInstalled() {
                     document.location = fallback;
-                } 
-                script.setAttribute('src', url); 
+                }, 300);
+                document.location = url;
 
-                document.getElementsByTagName('head')[0].appendChild(script);
+                document.addEventListener("visibilitychange", function() {
+                    if (document.visibilityState === 'visible') {
+                        console.log('has focus');
+                    } else {
+                        console.log('lost focus');
+                        clearTimeout(timeoutId);
+                    }
+                });
             }
 
             window.onerror = function(message, url, line, col, errorObj) {
