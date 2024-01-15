@@ -90,16 +90,16 @@
                     document.location = fallback;
                 }, 300);
 
-                try {
-                    document.location = url;
-                } catch {
-                    document.location = fallback;
-                }
+                document.location = url;
                 
-
                 window.addEventListener("blur", function() {
                     console.log('lost focus');
                     clearTimeout(timeoutId);
+                });
+
+                window.addEventListener("focus", function() {
+                    console.log('take focus');
+                    document.location = fallback;
                 });
             }
 
