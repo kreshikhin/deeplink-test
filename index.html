@@ -25,17 +25,25 @@
                 // Initialize the agent at application startup.
                 // If you're using an ad blocker or Brave/Firefox, this import will not work.
                 // Please use the NPM package instead: https://t.ly/ORyXk
-                const fpPromise = import('https://openfpcdn.io/fingerprintjs/v4')
-                .then(FingerprintJS => FingerprintJS.load());
+                import('https://openfpcdn.io/fingerprintjs/v4')
+                .then(FingerprintJS => {
+                    const fpPromise = FingerprintJS.load()
 
-                // Get the visitor identifier when you need it.
-                fpPromise
-                .then(fp => fp.get())
-                .then(result => {
-                    // This is the visitor identifier:
-                    const visitorId = result.visitorId
-                    console.log(visitorId)
-                    document.getElementById('visitor-id').textContent = visitorId;
+                    // Get the visitor identifier when you need it.
+                    fpPromise
+                    .then(fp => fp.get())
+                    .then(result => {
+                        // The `languages` and `audio` components will be excluded
+                        const { screenFrame, screenResolution, vendorFlavors, canvas, ...components } = result.components
+
+                        // Optionally, you can make a visitor identifier from your custom list of components
+                        const visitorId = FingerprintJS.hashComponents(components)
+
+                        // // This is the visitor identifier:
+                        // const visitorId = result.visitorId
+                        console.log(visitorId)
+                        document.getElementById('visitor-id').textContent = visitorId;
+                    });
                 });
 
                 document.getElementById('button').onclick = function(event) {
